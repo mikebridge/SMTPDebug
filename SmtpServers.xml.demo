@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<smtpservers>
+  <smtpserver>
+    <hostname>localhost</hostname>
+    <port>25</port>
+  </smtpserver>
+</smtpservers>
