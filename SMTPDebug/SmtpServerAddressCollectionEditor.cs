@@ -41,6 +41,7 @@ namespace SMTPDebug
 		#region LoadSmtpServersInDataSet
 		private void LoadSmtpServersInDataSet() 
 		{
+            //String filename = "TEST";
 
 			DataSet ds=new DataSet();			
 			ds.ReadXml(_smtpserverfile);
@@ -168,7 +169,7 @@ namespace SMTPDebug
 					}					
 					coll.Add(new SmtpServerAddress((String) row["hostname"], port));
 				}
-				coll.Save(_smtpserverfile);				
+				coll.Save();				
 				return true;
 			}			
 			catch (Exception ex) 
@@ -194,20 +195,6 @@ namespace SMTPDebug
 			if (success) 
 			{
 				this.Close();
-			}
-		}
-		#endregion
-
-		#region SmtpServerFile
-		public String SmtpServerFile 
-		{
-			get 
-			{
-				return _smtpserverfile;
-			}
-			set 
-			{
-				_smtpserverfile=value;
 			}
 		}
 		#endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections;
 
@@ -49,14 +50,16 @@ namespace SMTPDebug
 		}
 
 		#region Load
-		public static AddressBook Load(String filename) 
+		public static AddressBook Load() 
 		{
-			FileInfo thefile=new FileInfo(filename);
-			if (!thefile.Exists) 
-			{
-				FileInfo origfile=new FileInfo(filename+".orig");
-				origfile.CopyTo(filename);
-			}
+            String filename = EnsureUserFile();
+
+            FileInfo thefile = new FileInfo(filename);
+            if (!thefile.Exists)
+            {
+                throw new ApplicationException(String.Format("Can't open {0}", filename));
+            }
+
 			TextReader reader = null;
 			AddressBook coll=new AddressBook();
 			try 
@@ -72,7 +75,51 @@ namespace SMTPDebug
 			return coll;
 		} 
 		#endregion
-    
+
+        private static String EnsureUserFile()
+        {
+            String userFileLocation = GetSmtpServerConfigFile();
+            if (!File.Exists(userFileLocation))
+            {
+                CreateUserFile(userFileLocation);
+            }
+            return userFileLocation;
+        }
+
+        public static String GetSmtpServerConfigFile()
+        {
+            //return System.IO.Path.Combine(Application.StartupPath,"AddressBook.xml");
+            return System.IO.Path.Combine(Application.UserAppDataPath, "AddressBook.xml");
+        }
+
+        /// <summary>
+        /// Creates the user file from the default.  If the default is missing, an
+        /// error is thrown.
+        /// </summary>
+        /// <param name="destination"></param>
+        private static void CreateUserFile(String destination)
+        {
+            const string demofilename = "AddressBook.xml.demo";
+            bool found = false;
+            foreach (String dir in new[] 
+                {
+                    Application.StartupPath
+                }
+                )
+            {
+                FileInfo origfile = new FileInfo(System.IO.Path.Combine(dir, demofilename));
+                if (origfile.Exists)
+                {
+                    found=true;
+                    origfile.CopyTo(destination);
+                }
+            }
+            if (!found)
+            {
+                throw new ApplicationException(String.Format("Could not find the {0} file.", demofilename));
+            }
+        }
+
 		#region Save
 		public void Save(String filename) 
 		{

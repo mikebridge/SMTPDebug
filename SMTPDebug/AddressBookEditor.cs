@@ -42,7 +42,7 @@ namespace SMTPDebug
 			//BindAddresses();
 			LoadAddressesInDataSet();
 
-			dataGrid1.DoubleClick+=new EventHandler(dataGrid1_DoubleClick);
+			dataGrid1.DoubleClick+=dataGrid1_DoubleClick;
 			//dataGrid1.E
 		}
 		#endregion

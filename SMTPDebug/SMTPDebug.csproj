@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{111E4FBE-5C43-4AEA-B06A-F832A3BF0647}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -148,7 +148,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)AddressBook.xml" "$(ProjectDir)$(OutDir)"</PreBuildEvent>
-    <PostBuildEvent>copy "$(SolutionDir)SmtpServers.xml"   "$(ProjectDir)$(OutDir)"</PostBuildEvent>
+    <PreBuildEvent>copy "$(SolutionDir)AddressBook.xml.demo" "$(ProjectDir)$(OutDir)AddressBook.xml.demo"
+</PreBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)SmtpServers.xml.demo" "$(ProjectDir)$(OutDir)SmtpServers.xml.demo"</PostBuildEvent>
   </PropertyGroup>
 </Project>

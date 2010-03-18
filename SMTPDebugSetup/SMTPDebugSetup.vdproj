@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DDCCF7E4A4AC51D8DE8733AAAA82BD34"
+        "OwnerKey" = "8:_F85467BECC6B4FE9A07E83A291D3B579"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F85467BECC6B4FE9A07E83A291D3B579"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -41,6 +47,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F85467BECC6B4FE9A07E83A291D3B579"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DDCCF7E4A4AC51D8DE8733AAAA82BD34"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -70,6 +82,11 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5"
+                    {
+                    "Name" = "8:.NET Framework 3.5"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5"
+                    }
                 }
             }
         }
@@ -132,7 +149,7 @@
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1CE19342F2D44CFBB81BB04F4837B1A2"
             {
             "SourcePath" = "8:..\\SmtpServers.xml.demo"
-            "TargetName" = "8:SmtpServers.xml.orig"
+            "TargetName" = "8:SmtpServers.xml.demo"
             "Tag" = "8:"
             "Folder" = "8:_D6D036FA9F6F40118DE5DD5100539249"
             "Condition" = "8:"
@@ -152,7 +169,7 @@
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_909DD8AFE2E94C4C9660A3755F3A9F46"
             {
             "SourcePath" = "8:..\\AddressBook.xml.demo"
-            "TargetName" = "8:AddressBook.xml.orig"
+            "TargetName" = "8:AddressBook.xml.demo"
             "Tag" = "8:"
             "Folder" = "8:_D6D036FA9F6F40118DE5DD5100539249"
             "Condition" = "8:"
@@ -187,6 +204,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DDCCF7E4A4AC51D8DE8733AAAA82BD34"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:DotNetOpenMail, Version=1.0.3679.18794, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DDCCF7E4A4AC51D8DE8733AAAA82BD34"
+                    {
+                    "Name" = "8:DotNetOpenMail.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:DotNetOpenMail.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_D6D036FA9F6F40118DE5DD5100539249"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -239,13 +287,14 @@
         "MsiBootstrapper"
         {
         "LangId" = "3:1033"
+        "RequiresElevation" = "11:FALSE"
         }
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SMTPDebug"
         "ProductCode" = "8:{D904C30C-889B-4DD5-A96E-BEC58237EA27}"
-        "PackageCode" = "8:{4FCE0FD7-7DA4-4572-833A-6B8242D713C5}"
+        "PackageCode" = "8:{EA701537-6390-44E9-BA91-E619184E3405}"
         "UpgradeCode" = "8:{5232DEB0-C732-49B8-878E-06AFF8B1BD74}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1089,9 +1138,6 @@
                 {
                 }
             }
-        }
-        "VJSharpPlugin"
-        {
         }
     }
 }

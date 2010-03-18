@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text;
 using System.Drawing;
 using System.Collections;
@@ -62,9 +63,17 @@ namespace SMTPDebug
 			//
 			// Required for Windows Form Designer support
 			//
-			InitializeComponent();			
-			UseDefaultData();
-			txtTestMessage.Text=GetTestTextMessage();
+			InitializeComponent();
+            try
+            {
+                UseDefaultData();
+                txtTestMessage.Text = GetTestTextMessage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.StackTrace);
+                
+            }
 		}
 		#endregion
 
@@ -483,7 +492,7 @@ namespace SMTPDebug
 		#region LoadFromEmailAddresses
 		private void LoadFromEmailAddresses() 
 		{	
-			_fromaddressbook=AddressBook.Load(GetAddressBookConfigFile());
+			_fromaddressbook=AddressBook.Load();
 			
 			/*
 			_fromaddresses=new EmailAddress[4];
@@ -498,7 +507,7 @@ namespace SMTPDebug
 		#region LoadToEmailAddresses
 		private void LoadToEmailAddresses() 
 		{
-			_toaddressbook=AddressBook.Load(GetAddressBookConfigFile());
+			_toaddressbook=AddressBook.Load();
 			
 //			_toaddresses=new EmailAddress[5];
 //			_toaddresses[0]=new EmailAddress("mike@mymailout.com", "Mike Bridge");
@@ -529,22 +538,25 @@ namespace SMTPDebug
 		{
 			//_smtpservers=new SmtpServerAddressCollection();
 			//_smtpservers.Load(GetSmtpServerConfigFile());
-			_smtpservers=SmtpServerAddressCollection.Load(GetSmtpServerConfigFile());
+			_smtpservers=SmtpServerAddressCollection.Load();
 
 		}
 		#endregion
 
-		#region GetSmtpServerConfigFile
-		private String GetSmtpServerConfigFile() 
-		{
-			return System.IO.Path.Combine(Application.StartupPath,"SmtpServers.xml");
-		}
-		#endregion
+
 
 		#region GetAddressBookConfigFile
+
+        private String GetDefaultAddressBookConfigFile()
+        {
+            //return System.IO.Path.Combine(Application.StartupPath,"AddressBook.xml");
+            return System.IO.Path.Combine(Application.StartupPath, "AddressBook.xml.orig");
+        }
+
 		private String GetAddressBookConfigFile() 
 		{
-			return System.IO.Path.Combine(Application.StartupPath,"AddressBook.xml");
+			//return System.IO.Path.Combine(Application.StartupPath,"AddressBook.xml");
+            return System.IO.Path.Combine(Application.UserAppDataPath, "AddressBook.xml");
 		}
 		#endregion
 
@@ -797,7 +809,7 @@ namespace SMTPDebug
 		#region SaveSmtpServers
 		private void SaveSmtpServers() 
 		{
-			this._smtpservers.Save(GetSmtpServerConfigFile());
+			this._smtpservers.Save();
 		}
 		#endregion
 
@@ -917,7 +929,7 @@ namespace SMTPDebug
 
 		private void btnSmtpServers_Click(object sender, System.EventArgs e)
 		{
-			SmtpServerAddressCollectionEditor smtpservereditor=new SmtpServerAddressCollectionEditor(GetSmtpServerConfigFile());
+			SmtpServerAddressCollectionEditor smtpservereditor=new SmtpServerAddressCollectionEditor(SmtpServerAddressCollection.GetSmtpServerConfigFile());
 			smtpservereditor.ShowDialog(this);
 			InitializeSmtpServers();
 		}

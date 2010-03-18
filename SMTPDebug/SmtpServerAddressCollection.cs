@@ -1,8 +1,7 @@
 using System;
-using System.Text;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Collections;
 
 namespace SMTPDebug
 {
@@ -43,16 +42,19 @@ namespace SMTPDebug
 		}
 
 		#region Load
-		public static SmtpServerAddressCollection Load(String filename) 
+		public static SmtpServerAddressCollection Load() 
 		{
-			FileInfo thefile=new FileInfo(filename);
+            String filename = EnsureUserFile();
+
+            FileInfo thefile=new FileInfo(filename);
 			if (!thefile.Exists) 
 			{
-				FileInfo origfile=new FileInfo(filename+".orig");
-				origfile.CopyTo(filename);
+                throw new ApplicationException(String.Format("Can't open {0}", filename));
 			}
 			TextReader reader = null;
+
 			SmtpServerAddressCollection coll=new SmtpServerAddressCollection();
+
 			try 
 			{
 				reader=new StreamReader(filename);
@@ -61,17 +63,75 @@ namespace SMTPDebug
 			}
 			finally 
 			{
-				reader.Close();
+                if (reader!=null)
+                {
+                    reader.Close();
+                }
 			}
 			return coll;
 		} 
 		#endregion
-    
+
+
+        private static String EnsureUserFile()
+        {
+            String userFileLocation = GetSmtpServerConfigFile();
+            if (!File.Exists(userFileLocation))
+            {
+                CreateUserFile(userFileLocation);
+            }
+            return userFileLocation;
+        }
+
+        #region GetSmtpServerConfigFile
+        public static String GetSmtpServerConfigFile()
+        {
+            //return System.IO.Path.Combine(Application.StartupPath,"SmtpServers.xml");
+            return System.IO.Path.Combine(Application.UserAppDataPath, "SmtpServers.xml");
+        }
+
+        /// <summary>
+        /// Creates the user file from the default.  If the default is missing, an
+        /// error is thrown.
+        /// </summary>
+        /// <param name="destination"></param>
+        private static void CreateUserFile(String destination)
+        {
+            const string demofilename = "SmtpServers.xml.demo";
+            bool found = false;
+            String dirstried = "";
+            foreach (String dir in new[]
+                                       {
+                                           Application.StartupPath
+                                           //Application.ExecutablePath
+                                       }
+                )
+            {
+                dirstried += " " + dir;
+                FileInfo origfile = new FileInfo(System.IO.Path.Combine(dir, demofilename));
+                if (origfile.Exists)
+                {
+                    origfile.CopyTo(destination);
+                    found = true;
+                    //return destination;
+                }
+            }
+            if (!found)
+            {
+
+                throw new ApplicationException(String.Format("Could not find the {0} file in {1}.", demofilename,
+                                                             dirstried));
+            }
+        }
+
+        #endregion
+
+
+
 		#region Save
-		public void Save(String filename) 
+		public void Save() 
 		{
-			//StringBuilder sb=new StringBuilder("");
-			//StringWriter sw=null;			
+            String filename = GetSmtpServerConfigFile();
 			StreamWriter sw=null;
 			try 
 			{
